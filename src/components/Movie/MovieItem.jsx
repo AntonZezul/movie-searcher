@@ -10,12 +10,9 @@ import {
 } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import Poster from '../Poster';
-import { useDispatch } from 'react-redux';
-import { getMovieId } from '../../store/movieReducer';
 import { useEffect } from 'react';
-import { useState } from 'react';
 
-const useStyle = makeStyles((theme) => ({
+const useStyle = makeStyles(() => ({
   root: {
     flexGrow: 1,
   },

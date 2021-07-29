@@ -2,7 +2,7 @@ import { Container, Grid, makeStyles } from '@material-ui/core';
 import React from 'react';
 
 function MovieList({ children, marginTop }) {
-  const useStyle = makeStyles((theme) => ({
+  const useStyle = makeStyles(() => ({
     root: {
       flexGrow: 1,
     },

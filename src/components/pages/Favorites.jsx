@@ -18,9 +18,9 @@ function Favorites() {
   return (
     <>
       <Header />
-      <MovieList marginTop='8rem'>{
-         <MovieItem  movies={allStorage()} /> 
-      }</MovieList>
+      <MovieList marginTop='8rem'>
+        {<MovieItem movies={allStorage()} />}
+      </MovieList>
     </>
   );
 }

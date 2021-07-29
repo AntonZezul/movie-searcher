@@ -20,13 +20,15 @@ const useStyle = makeStyles((theme) => ({
 
 function Movie() {
   const classes = useStyle();
-  const { movie, movieId, loading, error } = useSelector((state) => state.movie);
-  const dispath = useDispatch()  
-  const {id} = useParams()
+  const { movie, movieId, loading, error } = useSelector(
+    (state) => state.movie
+  );
+  const dispath = useDispatch();
+  const { id } = useParams();
 
-  useEffect(()=>{
-    dispath(fetchMovie(id))
-  }, [])
+  useEffect(() => {
+    dispath(fetchMovie(id));
+  }, []);
 
   return (
     <>

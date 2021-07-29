@@ -5,6 +5,7 @@ import Header from '../Header';
 import Loader from '../Loader';
 import MovieItem from '../Movie/MovieItem';
 import MovieList from '../Movie/MovieList';
+import Pages from '../Pages';
 import SearchField from '../SearchField';
 
 function Home() {
@@ -17,12 +18,15 @@ function Home() {
         <SearchField />
         {loading && !error ? (
           <Loader />
-        ) : error && movies.length === 0 ? (
+        ) : error ? (
           <Error error={error} />
         ) : (
-          <MovieList marginTop='4rem'>
-            <MovieItem movies={movies} />
-          </MovieList>
+          <>
+            <Pages />
+            <MovieList marginTop='4rem'>
+              <MovieItem movies={movies} />
+            </MovieList>
+          </>
         )}
       </>
     </div>

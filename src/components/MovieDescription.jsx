@@ -8,7 +8,6 @@ import {
 import React from 'react';
 import Poster from './Poster';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
-import StarIcon from '@material-ui/icons/Star';
 import { useState } from 'react';
 import Star from '@material-ui/icons/Star';
 import { useEffect } from 'react';

@@ -4,22 +4,26 @@ import {
   movieDetailSuccess,
 } from '../store/movieReducer';
 import {
+  getTotalResults,
+  moviesRequest,
   previewMoviesFailure,
   previewMoviesSuccess,
   searchMovieFailure,
-  searchMovieRequest,
   searchMovieSuccess,
 } from '../store/moviesReducer';
 
 const API_KEY = '6c805f8b';
 
-export const search = (searchValue) => {
+export const search = (searchValue, page = 1) => {
   return (dispatch) => {
-    dispatch(searchMovieRequest());
-    fetch(`https://www.omdbapi.com/?s=${searchValue}&apikey=${API_KEY}`)
+    dispatch(moviesRequest());
+    fetch(
+      `https://www.omdbapi.com/?s=${searchValue}&apikey=${API_KEY}&page=${page}`
+    )
       .then((response) => response.json())
       .then((jsonResponse) => {
         if (jsonResponse.Response === 'True') {
+          dispatch(getTotalResults(jsonResponse.totalResults));
           dispatch(searchMovieSuccess(jsonResponse.Search));
         } else {
           dispatch(searchMovieFailure(jsonResponse.Error));
@@ -28,9 +32,25 @@ export const search = (searchValue) => {
   };
 };
 
-export const fetchPreview = () => {
+export const fetchPreview = (page = 1) => {
   return (dispatch) => {
-    fetch(`https://www.omdbapi.com/?s=batman&apikey=${API_KEY}&page=2`)
+    dispatch(moviesRequest());
+    fetch(`https://www.omdbapi.com/?s=batman&apikey=${API_KEY}&page=${page}`)
+      .then((response) => response.json())
+      .then((json) => {
+        if (json.Response === 'True') {
+          dispatch(getTotalResults(json.totalResults));
+          dispatch(previewMoviesSuccess(json.Search));
+        } else {
+          dispatch(previewMoviesFailure(json.Error));
+        }
+      });
+  };
+};
+
+export const fetchMovies = (page) => {
+  return (dispatch) => {
+    fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&page=${page}`)
       .then((response) => response.json())
       .then((json) => {
         if (json.Response === 'True') {
@@ -49,11 +69,11 @@ export const fetchMovie = (imdbID) => {
       .then((response) => {
         if (response.ok) {
           return response.json();
-        } 
+        }
       })
       .then((json) => {
         dispatch(movieDetailSuccess(json));
       })
-      .catch((err) => dispatch(movieDetailFailure('Faild to fetch movie')));
+      .catch(() => dispatch(movieDetailFailure('Faild to fetch movie')));
   };
 };
